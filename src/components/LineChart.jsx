@@ -37,11 +37,11 @@ const options = {
 };
 
 const LineChart = (props) => {
-  data.datasets[0].data = props.data;
+  data.datasets[0].data = props.dataValues;
   return (
-      <div>
-          <Scatter data={data} options={options} />
-        </div>
+    <div>
+      <Scatter data={data} options={options} />
+    </div>
   );
 };
 

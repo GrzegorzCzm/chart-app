@@ -4,6 +4,7 @@ import socketIOClient from 'socket.io-client';
 import { websocketConnect, resetData } from '../actions/dataCollection';
 
 import LineChart from './LineChart';
+import BarChart from './BarChart';
 
 const socket = socketIOClient('http://localhost:4000');
 
@@ -13,12 +14,15 @@ class Charts extends React.Component {
   }
 
   render() {
-    const { measurements, resetDataAction } = this.props;
+    const {
+      measurements, rangesValues, rangesLabels, resetDataAction,
+    } = this.props;
 
     return (
       <div>
         <button onClick={resetDataAction}>Reset data</button>
-        <LineChart data={measurements} />
+        <LineChart dataValues={measurements} />
+        <BarChart dataValues={rangesValues} labelsValues={rangesLabels} />
       </div>
     );
   }
@@ -26,6 +30,8 @@ class Charts extends React.Component {
 
 const mapStateToProps = (state) => ({
   measurements: state.dataCollection.measurements,
+  rangesValues: state.dataCollection.rangesValues,
+  rangesLabels: state.dataCollection.rangesLabels,
 });
 
 const mapDispatchToProps = (dispatch) => ({

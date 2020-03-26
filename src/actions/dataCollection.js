@@ -8,7 +8,7 @@ export const websocketConnect = (socket) => (dispatch) => {
   socket.on('data', (payload) => {
     dispatch({
       type: GET_PAYLOAD,
-      data: { x: payload.timestamp, y: payload.value },
+      data: payload,
     });
   });
 };
