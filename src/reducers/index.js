@@ -1,5 +1,9 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({});
+import dataCollection from './dataCollection';
+
+const rootReducer = combineReducers({
+  dataCollection,
+});
 
 export default rootReducer;
