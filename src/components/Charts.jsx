@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
+import Button from '@material-ui/core/Button';
+
 import { websocketConnect, resetData } from '../actions/dataCollection';
 
 import LineChart from './LineChart';
 import BarChart from './BarChart';
+import DiscreteSlider from './DiscreteSlider';
 
 const socket = socketIOClient('http://localhost:4000');
 
@@ -20,7 +23,8 @@ class Charts extends React.Component {
 
     return (
       <div>
-        <button onClick={resetDataAction}>Reset data</button>
+        <Button variant="contained" color="primary" onClick={resetDataAction}>Reset data</Button>
+        <DiscreteSlider />
         <LineChart dataValues={measurements} />
         <BarChart dataValues={rangesValues} labelsValues={rangesLabels} />
       </div>

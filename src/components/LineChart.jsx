@@ -37,7 +37,8 @@ const options = {
 };
 
 const LineChart = (props) => {
-  data.datasets[0].data = props.dataValues;
+  const { dataValues } = props;
+  data.datasets[0].data = dataValues;
   return (
     <div>
       <Scatter data={data} options={options} />
