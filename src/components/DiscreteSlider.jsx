@@ -10,7 +10,7 @@ import { MIN_VALUE, MAX_VALUE } from '../utils/commonValues';
 
 const useStyles = makeStyles({
   root: {
-    width: 400,
+    width: '100%',
   },
   text: {
     color: 'black',

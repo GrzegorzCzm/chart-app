@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Scatter } from 'react-chartjs-2';
 import moment from 'moment';
+import TextField from '@material-ui/core/TextField';
 
 const data = {
   datasets: [
@@ -36,7 +37,6 @@ const options = {
       },
     }],
   },
-
 };
 
 const getData = (dataValues) => {
@@ -45,13 +45,14 @@ const getData = (dataValues) => {
 };
 
 
-const getOptions = (dataValues) => {
+const getOptions = ({ dataValues, timeWindow }) => {
   if (dataValues.length > 0) {
     const newMax = Math.ceil(dataValues[dataValues.length - 1].x / 1000) * 1000;
-    const newMin = newMax - 50000;
+    const newMin = newMax - timeWindow;
     options.scales.xAxes[0].ticks.min = newMin;
     options.scales.xAxes[0].ticks.max = newMax;
   }
+  options.scales.xAxes[0].ticks.stepSize = timeWindow / 10;
   return options;
 };
 
@@ -59,9 +60,38 @@ const getOptions = (dataValues) => {
 const LineChart = (props) => {
   const { dataValues } = props;
 
+  const [timeWindow, setTimeWindow] = useState(10000);
+
+  const updateTimeWindow = (event) => {
+    const { value } = event.target;
+    const splittedTime = value.split(':');
+    const newTimeWindow = parseInt(splittedTime[2], 10) * 1000
+    + parseInt(splittedTime[1], 10) * 1000 * 60
+    + parseInt(splittedTime[0], 10) * 1000 * 60 * 60;
+    setTimeWindow(newTimeWindow);
+  };
   return (
     <div>
-      <Scatter data={getData(dataValues)} options={getOptions(dataValues)} />
+      <form noValidate>
+        <TextField
+          onChange={updateTimeWindow}
+          id="time"
+          label="Time window: "
+          type="time"
+          defaultValue="00:00:30"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          inputProps={{
+            step: 500,
+          }}
+        />
+      </form>
+      <Scatter
+        width={600}
+        data={getData(dataValues)}
+        options={getOptions({ dataValues, timeWindow })}
+      />
     </div>
   );
 };

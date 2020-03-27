@@ -29,16 +29,21 @@ const options = {
       }],
   },
 };
-const BarChart = (props) => {
-  const { dataValues, labelsValues } = props;
+
+const getData = ({ dataValues, labelsValues }) => {
   data.datasets[0].data = dataValues;
   data.labels = labelsValues;
+  return data;
+};
+
+
+const BarChart = (props) => {
+  const { dataValues, labelsValues } = props;
+
   return (
     <div>
       <Bar
-        data={data}
-        width={400}
-        height={300}
+        data={getData({ dataValues, labelsValues })}
         options={options}
       />
     </div>
