@@ -70,9 +70,10 @@ const LineChart = (props) => {
   const updateTimeWindow = (event) => {
     const { value } = event.target;
     const splittedTime = value.split(':');
-    const newTimeWindow = parseInt(splittedTime[2], 10) * 1000
+    const seconds = splittedTime.length > 2 ? parseInt(splittedTime[2], 10) * 1000 : 0;
+    const newTimeWindow = parseInt(splittedTime[0], 10) * 1000 * 60 * 60
     + parseInt(splittedTime[1], 10) * 1000 * 60
-    + parseInt(splittedTime[0], 10) * 1000 * 60 * 60;
+    + seconds;
     setTimeWindow(newTimeWindow);
   };
   return (
