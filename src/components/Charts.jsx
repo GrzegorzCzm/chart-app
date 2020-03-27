@@ -5,9 +5,8 @@ import socketIOClient from 'socket.io-client';
 import Box from '@material-ui/core/Box';
 
 import { websocketConnect, resetData } from '../actions/dataCollection';
-
-import ChartsControls from './ChartsControls';
 import ChartView from './ChartView';
+import ChartsControls from './controls/ChartsControls';
 
 const SOCKET_URL = socketIOClient('http://localhost:4000');
 

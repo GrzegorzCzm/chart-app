@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Scatter } from 'react-chartjs-2';
 import moment from 'moment';
 import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
+
+import TimeSlot from './controls/TimeSlot';
 
 const data = {
   datasets: [
@@ -64,7 +65,7 @@ const getOptions = ({ dataValues, timeWindow }) => {
 const LineChart = (props) => {
   const { dataValues } = props;
 
-  const [timeWindow, setTimeWindow] = useState(10000);
+  const [timeWindow, setTimeWindow] = useState(30000);
 
   const updateTimeWindow = (event) => {
     const { value } = event.target;
@@ -76,22 +77,9 @@ const LineChart = (props) => {
   };
   return (
     <Box>
-      <form noValidate>
-        <TextField
-          onChange={updateTimeWindow}
-          id="time"
-          label="Time window: "
-          type="time"
-          defaultValue="00:00:30"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          inputProps={{
-            step: 500,
-          }}
-        />
-      </form>
+      <TimeSlot updateTimeWindow={updateTimeWindow} />
       <Scatter
+        height={80}
         data={getData(dataValues)}
         options={getOptions({ dataValues, timeWindow })}
       />

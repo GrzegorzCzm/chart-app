@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
 import Charts from './components/Charts';
-import Alert from './components/Alert';
+import Alert from './components/controls/Alert';
 
 const useStyles = makeStyles({
   root: {

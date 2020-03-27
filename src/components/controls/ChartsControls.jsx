@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 import DiscreteSlider from './DiscreteSlider';
 
@@ -23,7 +25,7 @@ const ChartsControls = (props) => {
   return (
     <Box className={classes.root}>
       <DiscreteSlider />
-      <Button size="small" variant="contained" color="primary" onClick={resetData}>Reset data</Button>
+      <Button startIcon={<DeleteIcon />} size="small" variant="outlined" color="primary" onClick={resetData}>Reset data</Button>
     </Box>
   );
 };

@@ -6,22 +6,53 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Slider from '@material-ui/core/Slider';
 
-import { setAlertThreshold } from '../actions/alerts';
-import { MIN_VALUE, MAX_VALUE } from '../utils/commonValues';
+import { setAlertThreshold } from '../../actions/alerts';
+import { MIN_VALUE, MAX_VALUE } from '../../utils/commonValues';
 
 const useStyles = makeStyles((theme) => ({
   rootSlider: {
     [theme.breakpoints.down('sm')]: {
       width: 100,
     },
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.between('sm', 'md')]: {
       width: 300,
     },
+    [theme.breakpoints.up('md')]: {
+      width: 450,
+    },
+    padding: '0px 20px',
   },
   text: {
-    fontSize: theme.typography.pxToRem(10),
+    fontSize: theme.typography.pxToRem(12),
+    color: 'gray',
+  },
+  slider: {
+    color: 'gray',
   },
 }));
+
+const marks = [
+  {
+    value: -100,
+    label: '-100',
+  },
+  {
+    value: -50,
+    label: '-50',
+  },
+  {
+    value: 0,
+    label: '0',
+  },
+  {
+    value: 50,
+    label: '50',
+  },
+  {
+    value: 100,
+    label: '100',
+  },
+];
 
 function valuetext(value) {
   return `Alert threshold: ${value}`;
@@ -32,7 +63,7 @@ const DiscreteSlider = (props) => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.rootSlider}>
+    <Box className={classes.rootSlider} borderRadius="borderRadius" border={1} borderColor="gray">
       <Typography className={classes.text} id="discrete-slider">
         Alert threshold:
       </Typography>
@@ -45,7 +76,7 @@ const DiscreteSlider = (props) => {
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
         step={10}
-        marks
+        marks={marks}
         min={MIN_VALUE}
         max={MAX_VALUE}
       />

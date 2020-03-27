@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 import Box from '@material-ui/core/Box';
 
-
 const data = {
   labels: ['-100 - -50', '-50 - 0', '0 - 50', '50 - 100'],
   datasets: [

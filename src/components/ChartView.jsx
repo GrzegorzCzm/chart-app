@@ -12,8 +12,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: 300,
     },
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.between('sm', 'md')]: {
       width: 600,
+    },
+    [theme.breakpoints.up('md')]: {
+      width: 900,
     },
   },
 }));
