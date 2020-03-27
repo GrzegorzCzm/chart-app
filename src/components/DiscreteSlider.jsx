@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 
 import { setAlertThreshold } from '../actions/alerts';
+import { MIN_VALUE, MAX_VALUE } from '../utils/commonValues';
 
 const useStyles = makeStyles({
   root: {
@@ -31,14 +33,14 @@ const DiscreteSlider = (props) => {
       <Slider
         onChange={((event, value) => setAlertThresholdAction(value))}
         value={alertThreshold}
-        defaultValue={100}
+        defaultValue={MAX_VALUE}
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
         step={10}
         marks
-        min={-100}
-        max={100}
+        min={MIN_VALUE}
+        max={MAX_VALUE}
       />
     </div>
   );
@@ -54,5 +56,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setAlertThreshold(threshold));
   },
 });
+
+DiscreteSlider.propTypes = {
+  alertThreshold: PropTypes.number.isRequired,
+  setAlertThresholdAction: PropTypes.func.isRequired,
+
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscreteSlider);

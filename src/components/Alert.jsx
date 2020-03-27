@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -38,5 +39,15 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(cancelAlert());
   },
 });
+
+Alert.propTypes = {
+  isAlert: PropTypes.bool.isRequired,
+  alertedValue: PropTypes.number,
+  cancelAlertAction: PropTypes.func.isRequired,
+};
+
+Alert.defaultProps = {
+  alertedValue: null,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Alert);

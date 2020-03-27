@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 
 const data = {
@@ -42,6 +43,15 @@ const BarChart = (props) => {
       />
     </div>
   );
+};
+
+BarChart.propTypes = {
+  dataValues: PropTypes.arrayOf(
+    PropTypes.number.isRequired,
+  ).isRequired,
+  labelsValues: PropTypes.arrayOf(
+    PropTypes.string.isRequired,
+  ).isRequired,
 };
 
 export default BarChart;

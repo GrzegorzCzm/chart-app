@@ -1,31 +1,28 @@
-import { CONNECT_TO_WEBSOCKET, GET_PAYLOAD, RESET_DATA } from '../actions/dataCollection';
+import { GET_PAYLOAD, RESET_DATA } from '../actions/dataCollection';
+import { MIN_VALUE } from '../utils/commonValues';
 
-const statuses = {
-  ONLINE: 'ONLINE',
-  OFFLINE: 'OFFLINE',
-};
-
-const MIN_VALUE = -100;
-const MAX_VALUE = 100;
+const BUFFER_SIZE = 400;
 const DIVIDER = 50;
 
 const INITIAL_STATE = {
   measurements: [],
   rangesValues: [0, 0, 0, 0],
-  rangesLabels: ['-100->-50', '-50-0', '0-50', '50-100'],
-
-  status: statuses.OFFLINE,
+  rangesLabels: ['-100 - -50', '-50 - 0', '0 - 50', '50 - 100'],
 };
 
 const actionHandlers = {
-  [CONNECT_TO_WEBSOCKET]: () => ({ status: statuses.ONLINE }),
   [GET_PAYLOAD]: (state, action) => {
     const tmpRangesValues = [...state.rangesValues];
     const { timestamp, value } = action.data;
     const slotToUpdate = Math.floor((value - MIN_VALUE) / DIVIDER);
     tmpRangesValues[slotToUpdate] += 1;
+    let tmpMeasurements = [...state.measurements, { x: timestamp, y: value }];
+    const currentLength = tmpMeasurements.length;
+    tmpMeasurements = currentLength > BUFFER_SIZE
+      ? tmpMeasurements.slice(currentLength - BUFFER_SIZE, currentLength)
+      : tmpMeasurements;
     return ({
-      measurements: [...state.measurements, { x: timestamp, y: value }],
+      measurements: tmpMeasurements,
       rangesValues: tmpRangesValues,
     });
   },
