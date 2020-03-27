@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Scatter } from 'react-chartjs-2';
 import moment from 'moment';
+import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 
 const data = {
@@ -27,6 +28,9 @@ const data = {
 };
 
 const options = {
+  legend: {
+    display: false,
+  },
   scales: {
     xAxes: [{
       ticks: {
@@ -71,7 +75,7 @@ const LineChart = (props) => {
     setTimeWindow(newTimeWindow);
   };
   return (
-    <div>
+    <Box>
       <form noValidate>
         <TextField
           onChange={updateTimeWindow}
@@ -88,11 +92,10 @@ const LineChart = (props) => {
         />
       </form>
       <Scatter
-        width={600}
         data={getData(dataValues)}
         options={getOptions({ dataValues, timeWindow })}
       />
-    </div>
+    </Box>
   );
 };
 

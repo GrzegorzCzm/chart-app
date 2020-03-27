@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
+import Box from '@material-ui/core/Box';
+
 
 const data = {
-  labels: [],
+  labels: ['-100 - -50', '-50 - 0', '0 - 50', '50 - 100'],
   datasets: [
     {
-      label: 'My First dataset',
+      label: 'Ranges',
       minBarLength: 2,
       backgroundColor: 'rgba(255,99,132,0.2)',
       borderColor: 'rgba(255,99,132,1)',
@@ -20,6 +22,9 @@ const data = {
 
 const options = {
   maintainAspectRatio: false,
+  legend: {
+    display: false,
+  },
   scales: {
     yAxes: [
       {
@@ -30,32 +35,28 @@ const options = {
   },
 };
 
-const getData = ({ dataValues, labelsValues }) => {
+const getData = (dataValues) => {
   data.datasets[0].data = dataValues;
-  data.labels = labelsValues;
   return data;
 };
 
 
 const BarChart = (props) => {
-  const { dataValues, labelsValues } = props;
+  const { dataValues } = props;
 
   return (
-    <div>
+    <Box>
       <Bar
-        data={getData({ dataValues, labelsValues })}
+        data={getData(dataValues)}
         options={options}
       />
-    </div>
+    </Box>
   );
 };
 
 BarChart.propTypes = {
   dataValues: PropTypes.arrayOf(
     PropTypes.number.isRequired,
-  ).isRequired,
-  labelsValues: PropTypes.arrayOf(
-    PropTypes.string.isRequired,
   ).isRequired,
 };
 

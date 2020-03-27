@@ -2,13 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import socketIOClient from 'socket.io-client';
-import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 import { websocketConnect, resetData } from '../actions/dataCollection';
 
-import LineChart from './LineChart';
-import BarChart from './BarChart';
-import DiscreteSlider from './DiscreteSlider';
+import ChartsControls from './ChartsControls';
+import ChartView from './ChartView';
 
 const SOCKET_URL = socketIOClient('http://localhost:4000');
 
@@ -20,16 +19,14 @@ class Charts extends React.Component {
 
   render() {
     const {
-      measurements, rangesValues, rangesLabels, resetDataAction,
+      measurements, rangesValues, resetDataAction,
     } = this.props;
 
     return (
-      <div>
-        <Button variant="contained" color="primary" onClick={resetDataAction}>Reset data</Button>
-        <DiscreteSlider />
-        <LineChart dataValues={measurements} />
-        <BarChart dataValues={rangesValues} labelsValues={rangesLabels} />
-      </div>
+      <Box>
+        <ChartsControls resetData={resetDataAction} />
+        <ChartView lineChartData={measurements} barChartData={rangesValues} />
+      </Box>
     );
   }
 }
@@ -37,7 +34,6 @@ class Charts extends React.Component {
 const mapStateToProps = (state) => ({
   measurements: state.dataCollection.measurements,
   rangesValues: state.dataCollection.rangesValues,
-  rangesLabels: state.dataCollection.rangesLabels,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -58,9 +54,6 @@ Charts.propTypes = {
   ).isRequired,
   rangesValues: PropTypes.arrayOf(
     PropTypes.number.isRequired,
-  ).isRequired,
-  rangesLabels: PropTypes.arrayOf(
-    PropTypes.string.isRequired,
   ).isRequired,
   resetDataAction: PropTypes.func.isRequired,
   websocketConnectAction: PropTypes.func.isRequired,

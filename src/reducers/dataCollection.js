@@ -1,13 +1,12 @@
 import { GET_PAYLOAD, RESET_DATA } from '../actions/dataCollection';
 import { MIN_VALUE } from '../utils/commonValues';
 
-const BUFFER_SIZE = 400;
+const BUFFER_SIZE = 100000000;
 const DIVIDER = 50;
 
 const INITIAL_STATE = {
   measurements: [],
   rangesValues: [0, 0, 0, 0],
-  rangesLabels: ['-100 - -50', '-50 - 0', '0 - 50', '50 - 100'],
 };
 
 const actionHandlers = {
@@ -19,7 +18,7 @@ const actionHandlers = {
     let tmpMeasurements = [...state.measurements, { x: timestamp, y: value }];
     const currentLength = tmpMeasurements.length;
     tmpMeasurements = currentLength > BUFFER_SIZE
-      ? tmpMeasurements.slice(currentLength - BUFFER_SIZE, currentLength)
+      ? tmpMeasurements.slice(BUFFER_SIZE / 10)
       : tmpMeasurements;
     return ({
       measurements: tmpMeasurements,
