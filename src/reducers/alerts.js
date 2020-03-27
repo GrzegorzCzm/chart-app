@@ -1,11 +1,12 @@
 import { SET_ALERT_THRESHOLD, CANCEL_ALERT } from '../actions/alerts';
-import { GET_PAYLOAD } from '../actions/dataCollection';
+import { GET_PAYLOAD, CONNECTION_STATUS_CHANGED } from '../actions/dataCollection';
 
+const CROSSED_THRESHOLD_TEXT = 'Threshold crossed: ';
 
 const INITIAL_STATE = {
   alertThreshold: 100,
   isAlert: false,
-  alertedValue: null,
+  alertText: '',
 };
 
 const actionHandlers = {
@@ -16,12 +17,13 @@ const actionHandlers = {
     if (isAlert) {
       return ({
         isAlert: action.data.value > state.alertThreshold,
-        alertedValue: value,
+        alertText: CROSSED_THRESHOLD_TEXT + value,
       });
     }
     return null;
   },
   [CANCEL_ALERT]: () => ({ isAlert: false }),
+  [CONNECTION_STATUS_CHANGED]: (state, action) => ({ isAlert: true, alertText: action.data }),
 };
 
 const reducer = (state = INITIAL_STATE, action) => {

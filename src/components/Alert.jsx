@@ -9,7 +9,7 @@ import { cancelAlert } from '../actions/alerts';
 
 
 const Alert = (props) => {
-  const { isAlert, alertedValue, cancelAlertAction } = props;
+  const { isAlert, alertText, cancelAlertAction } = props;
 
   return (
     <Snackbar
@@ -19,7 +19,7 @@ const Alert = (props) => {
       }}
       open={isAlert}
       onClose={cancelAlertAction}
-      message={`Threshold crossed: ${alertedValue}`}
+      message={alertText}
       action={(
         <IconButton size="small" aria-label="close" color="inherit" onClick={cancelAlertAction}>
           <CloseIcon fontSize="small" />
@@ -31,7 +31,7 @@ const Alert = (props) => {
 
 const mapStateToProps = (state) => ({
   isAlert: state.alerts.isAlert,
-  alertedValue: state.alerts.alertedValue,
+  alertText: state.alerts.alertText,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -42,12 +42,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 Alert.propTypes = {
   isAlert: PropTypes.bool.isRequired,
-  alertedValue: PropTypes.number,
+  alertText: PropTypes.string,
   cancelAlertAction: PropTypes.func.isRequired,
 };
 
 Alert.defaultProps = {
-  alertedValue: null,
+  alertText: '',
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Alert);
