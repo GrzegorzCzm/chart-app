@@ -1,3 +1,6 @@
+Backend cane be taken from https://github.com/GrzegorzCzm/chart-app-backend
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
